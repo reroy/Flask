@@ -1,8 +1,10 @@
 {% extends "bootstrap/base.html" %}
 
 {% block content %}
-<h1>result: {{ msg }}</h1>
-   <br><br>
-<a href="{{ url_for('new_contact') }}" class="btn btn-default">
-    go back to add more</a>
+    <h1>Result: {{ data.0 }}</h1>
+    <br><br>
+    <a href="{{ url_for('create_contact') }}" class="btn btn-default">
+        Create another contact
+    </a>
+    <a href="{{ url_for('home') }}" class="btn btn-default">See all contacts</a>
 {% endblock %}

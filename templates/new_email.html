@@ -1,0 +1,20 @@
+<html lang="en">
+<body>
+{% if 'create' in data %}
+    <form action="{{ url_for('save_new_email', contact_id=data['contact_id']) }}" method="POST">
+    <h3>Add new email to Contact {{ data['contact_id'] }}</h3>
+{% elif email %}
+    <form action="{{ url_for('update_email', email_id=email.id) }}" method="POST">
+    <h3>Update email to Contact {{ email.contact_id }}</h3>
+{% else %}
+    <form action="{{ url_for('add_email') }}" method="POST">
+    <h3>Get contact by Email</h3>
+{% endif %}
+<label>Email<br>
+<input type="text" name="email"/>
+</label><br><br>
+    <input type="submit"
+       value="{% if 'create' in data %}Create new email{% elif email %}Update email{% else %}Get contact{% endif %}"/><br>
+</form>
+</body>
+</html>

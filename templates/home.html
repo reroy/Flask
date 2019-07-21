@@ -1,7 +1,51 @@
-<!DOCTYPE html>
+{% extends "bootstrap/base.html" %}
 
-    <h1>Welcome!</h1>
+{% block content %}
+    <br><br>
+    <a href="{{ url_for('create_contact') }}" class="btn btn-default">Create Contact</a>
+    <a href="{{ url_for('get_email') }}" class="btn btn-default">Get Contact</a>
+    <a href="{{ url_for('start_scheduler') }}" class="btn btn-default">
+        {% if not scheduler_status %}Start contact creator{% else %}Stop contact creator{% endif %}
+    </a>
 
-{% for contact in contacts %}
-    {{ contact.username }}<br>
-{% endfor %}
+    <h1>Here are all the contacts created:</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Emails</th>
+            <th scope="col">First name</th>
+            <th scope="col">Surname</th>
+            <th>New Email</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.id }}</td>
+                <td><a href="{{ url_for('update_contact', contact_id=contact.id) }}" class="btn btn-info">{{ contact.username }}</a></td>
+                <td>
+                    {{ contact.email }}<br>
+                    {% for each_email in contact.emails %}
+                        <a href="{{ url_for('select_email', email_id=each_email.id) }}" class="btn btn-link">
+                            {{ each_email.new_email }}
+                        </a><br>
+
+                    {% endfor %}
+                </td>
+                <td>{{ contact.first_name }}</td>
+                <td>{{ contact.surname }}</td>
+                <td><a href="{{ url_for('add_email', contact_id=contact.id) }}" class="btn btn-warning">Add</a></td>
+                <td><a href="{{ url_for('delete', contact_id=contact.id) }}" class="btn btn-danger">X</a></td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+{% endblock %}
+
+
